@@ -1,0 +1,10 @@
+{% extends 'registration/base.html' %}
+{% block content %}
+    <h2>Logout</h2>
+    <p>Are you sure you want to log out?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Logout</button>
+    </form>
+    <p><a href="{% url 'question_list' %}">Back to Home</a></p>
+{% endblock %}

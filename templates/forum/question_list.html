@@ -1,0 +1,14 @@
+{% extends 'registration/base.html' %}
+{% block content %}
+    <h2>Questions</h2>
+    <ul>
+        {% for question in questions %}
+            <li>
+                <a href="{% url 'question_detail' question.pk %}">{{ question.title }}</a> 
+                ({{ question.answers.count }} answers)
+            </li>
+        {% empty %}
+            <li>No questions yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

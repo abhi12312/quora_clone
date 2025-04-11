@@ -1,0 +1,32 @@
+{% extends 'registration/base.html' %}
+{% block content %}
+    <h2>{{ question.title }}</h2>
+
+    <p>{{ question.text }}</p>
+    <p>Posted by {{ question.posted_by.username }} on {{ question.timestamp }}</p>
+
+    <h3>Answers</h3>
+    <ul>
+        {% for answer in answers %}
+            <li>
+                {{ answer.text }}<br>
+                Posted by {{ answer.posted_by.username }} on {{ answer.timestamp }}<br>
+                Likes: {{ answer.likes.count }}
+                {% if user.is_authenticated and user not in answer.likes.all %}
+                    <a href="{% url 'like_answer' answer.pk %}">Like</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No answers yet.</li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <h3>Post an Answer</h3>
+        <form method="post" action="{% url 'question_detail' question.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Answer</button>
+        </form>
+    {% endif %}
+{% endblock %}
